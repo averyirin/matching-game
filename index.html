@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+    <head>
+        <title>Matching Game</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+    <body>   
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">averyirin.github.io</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Unity Engine and C# <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://averyirin.github.io/tanks/">Tanks Game</a></li>
+                <li><a href="http://averyirin.github.io/plane-sim/">Plane Flight Game</a></li>
+                <li><a href="http://averyirin.github.io/fractals/">Beautiful Fractal Tree</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CakePHP Framework <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Vanguard Sensors Website</a></li>
+                <li><a href="#">Cake Blog</a></li>
+                <li><a href="#">Shadowrealms LARP Character Generation</a></li>
+              </ul>
+            </li>
+            <li class="dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Javascript <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://averyirin.github.io/matching-game/">Smiley Matching Game</a></li>
+                <li><a href="#">Color Guessing Game</a></li>
+                 </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">C/C++ <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">World&#8217;s Largest Arduino Maker Challenge</a></li>
+                <li><a href="#">Getting started with IoT</a></li>
+              </ul>
+            </li>
+          </ul><!--
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar/">Default</a></li>
+            <li><a href="../navbar-static-top/">Static top</a></li>
+            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+          </ul>-->
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+		
+    	<h1>Smiley Matching Game</h1>
+    	<p>Click on the extra smiling face on the left.</p>
+    </div>
+    <div>
+		<div id="leftSide"></div>
+		<div id ="rightSide"></div>
+		<script>
+			var numberOfFaces = 5;
+			var theLeftSide = document.getElementById("leftSide");
+			var theRightSide = document.getElementById("rightSide");
+			var theBody = document.getElementsByTagName("body")[0];
+
+			document.onload = generateFaces();
+			function generateFaces(){
+				//generate smiles
+				for(var i=0;i<numberOfFaces;i++){
+					var smile = document.createElement("img");
+					smile.src = "https://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+					var t = Math.floor(Math.random()*400)+"px";
+					var l = Math.floor(Math.random()*400)+"px";
+					smile.style.top = t;
+					smile.style.left = l;
+					theLeftSide.appendChild(smile);
+				}
+				//copy smiles from left to right removing one
+				var leftSideImages = theLeftSide.cloneNode(true);
+				leftSideImages.removeChild(leftSideImages.lastChild);
+				theRightSide.appendChild(leftSideImages);
+				//event handler for extra smiley
+				theLeftSide.lastChild.onclick= function nextLevel(event){
+					event.stopPropagation();
+
+				//delete nodes from left side
+				while(theLeftSide.firstChild)
+					theLeftSide.removeChild(theLeftSide.firstChild);
+				//delete nodes from right side
+				while(theRightSide.firstChild)
+					theRightSide.removeChild(theRightSide.firstChild);
+				
+					numberOfFaces += 5;
+					generateFaces();
+				}
+				//event handler for body
+				theLeftSide.onclick = function gameOver(event){
+					alert("Game Over!");
+					theLeftSide.onclick=null;
+					theLeftSide.lastChild.onclick=null;
+				}
+
+			}
+		</script>
+	</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    
+	  <script src="js/bootstrap.min.js"></script>
+
+    </body>
+</html>
